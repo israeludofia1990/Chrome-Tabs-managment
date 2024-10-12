@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tab Manager</title>
+  </head>
+  <body>
+    <h2>Tab Manager</h2>
+    <button id="checkTabs">Check Tabs</button>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('checkTabs').addEventListener('click', function() {
+          // Get the tab limit set in options
+          chrome.storage.sync.get(['tabLimit'], function(result) {
+            const tabLimit = result.tabLimit || 10;  // Default limit if not set
+            console.log('Tab limit is:', tabLimit);
+
+            // Now you can use the tabLimit value to check open tabs and enforce the limit
+            chrome.tabs.query({}, function(tabs) {
+              if (tabs.length > tabLimit) {
+                alert(`You have exceeded the tab limit! Limit: ${tabLimit}, Open: ${tabs.length}`);
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+
