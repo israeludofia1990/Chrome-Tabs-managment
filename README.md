@@ -1,5 +1,5 @@
 # Chrome-Tabs-managment
-chrome overload tabs management extensi# Chrome Tabs Manager Extension
+chrome overload tabs management extension
 
 ## Overview
 **Chrome Tabs Manager** is a simple, user-friendly Chrome extension designed to help users manage their tabs more efficiently.
