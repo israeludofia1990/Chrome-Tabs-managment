@@ -151,41 +151,105 @@ function handleExcessTabs(tabs, openTabsCount, tabLimit) {
     // Notify the user about the excess tabs
     chrome.notifications.create('excessTabsNotification', {
         type: 'basic',
-        iconUrl: '../Assets/icon128.png', // Use your own icon
+        iconUrl: '../Assets/icon128.png',
         title: 'Tab Limit Exceeded',
         message: `You have ${openTabsCount} open tabs, exceeding your limit of ${tabLimit}.`,
         priority: 2,
         buttons: [
-            { title: 'Close Excess Tabs' },
-            { title: 'Save Tabs' }
+            { title: 'Manage Excess Tabs' }
         ]
     });
 
-    // Handle button clicks (only for the excess tabs notification)
+    // Handle button clicks for the excess tabs notification
     chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
         if (notifId === 'excessTabsNotification') {
-            if (btnIdx === 0) { // Close excess tabs
-                closeExcessTabs(closeTabs);
-            } else if (btnIdx === 1) { // Save tabs
-                saveExcessTabs(closeTabs);
+            if (btnIdx === 0) { // Manage excess tabs
+                // Open a new tab to manage the excess tabs
+                chrome.tabs.create({ url: chrome.runtime.getURL("../helpers/HTML/manage_tabs.html") }, (tab) => {
+                    // Send the closeTabs data to the new tab
+                    chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo) {
+                        if (tabId === tab.id && changeInfo.status === "complete") {
+                            chrome.tabs.onUpdated.removeListener(listener);
+                            chrome.tabs.sendMessage(tabId, { action: "loadTabs", tabs: closeTabs });
+                        }
+                    });
+                });
             }
         }
     });
 }
 
+// Function to close a list of tabs
 function closeExcessTabs(tabsToClose) {
     tabsToClose.forEach(tab => {
         chrome.tabs.remove(tab.id);
     });
 }
 
+// Function to save a list of tabs
 function saveExcessTabs(tabsToSave) {
-    // Store the URLs of the tabs to be saved in chrome storage
     const savedTabs = tabsToSave.map(tab => tab.url);
-    chrome.storage.sync.set({ savedTabs }, function() {
-        alert('Excess tabs saved for later!');
+    chrome.storage.sync.get('savedTabs', function(result) {
+        const allSavedTabs = result.savedTabs ? result.savedTabs.concat(savedTabs) : savedTabs;
+        chrome.storage.sync.set({ savedTabs: allSavedTabs }, function() {
+            alert('Tabs saved for later!');
+        });
     });
 }
+
+
+// function handleExcessTabs(tabs, openTabsCount, tabLimit) {
+//     // Sort tabs by their last active time (oldest first)
+//     const sortedTabs = tabs.sort((a, b) => a.lastAccessed - b.lastAccessed);
+//     const excessTabs = sortedTabs.slice(0, openTabsCount - tabLimit); // Get the oldest excess tabs
+
+//     let excessTabsobj = [];
+//     excessTabs.forEach(tab => {
+//         excessTabsobj.push({
+//             id: tab.id,
+//             url: tab.url,
+//             title: tab.title
+//         });
+//     });
+
+//     // Notify the user about the excess tabs
+//     chrome.notifications.create('excessTabsNotification', {
+//         type: 'basic',
+//         iconUrl: '../Assets/icon128.png', // Use your own icon
+//         title: 'Tab Limit Exceeded',
+//         message: `You have ${openTabsCount} open tabs, exceeding your limit of ${tabLimit}.`,
+//         priority: 2,
+//         buttons: [
+//             { title: 'Manage Excess Tabs' },
+//             //{ title: 'Save Tabs' }
+//         ]
+//     });
+
+//     // Handle button clicks (only for the excess tabs notification)
+//     chrome.notifications.onButtonClicked.addListener((notifId, btnIdx) => {
+//         if (notifId === 'excessTabsNotification') {
+//             if (btnIdx === 0) { // Close excess tabs
+//                 closeExcessTabs(closeTabs);
+//             } else if (btnIdx === 1) { // Save tabs
+//                 saveExcessTabs(closeTabs);
+//             }
+//         }
+//     });
+// }
+
+// function closeExcessTabs(tabsToClose) {
+//     tabsToClose.forEach(tab => {
+//         chrome.tabs.remove(tab.id);
+//     });
+// }
+
+// function saveExcessTabs(tabsToSave) {
+//     // Store the URLs of the tabs to be saved in chrome storage
+//     const savedTabs = tabsToSave.map(tab => tab.url);
+//     chrome.storage.sync.set({ savedTabs }, function() {
+//         alert('Excess tabs saved for later!');
+//     });
+// }
 
 // const irrelevantSubdomains = ['www', 'm'];
 // const relevantSubdomains = [];
