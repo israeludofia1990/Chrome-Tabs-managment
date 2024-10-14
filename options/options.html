@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tab Limit Settings</title>
-    <link rel="stylesheet" href="../helpers/CSS/options.css"> 
+    <link rel="stylesheet" href="../helpers/CSS/options.css">
   </head>
   <body>
 
@@ -11,6 +13,10 @@
         <label for="tabLimit">Maximum number of open tabs:</label>
         <input type="number" id="tabLimit" min="1" placeholder="Enter tab limit">
         <button id="saveLimit">Save</button>
+        
+        <!-- New Close button -->
+        <button id="closePage" class="close-button">Close</button>
+
         <!-- Hidden success message initially -->
         <div id="message" class="success-message" style="display:none;">Tab limit saved successfully!</div>
     </div>
@@ -19,9 +25,6 @@
 
   </body>
 </html>
-
-
-
 
 <!-- <!DOCTYPE html>
 <html>

@@ -21,6 +21,7 @@ body {
 }
 
 .popup-container {
+    position: relative;
     background-color: #ffffff; /* White card background */
     border-radius: 10px;
     padding: 20px;
@@ -28,6 +29,22 @@ body {
     text-align: center;
     width: 100%;
     max-width: 280px;
+}
+
+/* Styling the Close Button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #ff0000; /* Change color on hover */
 }
 
 h2 {

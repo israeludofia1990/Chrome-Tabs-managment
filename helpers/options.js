@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Close the options page when the close button is clicked
+document.getElementById('closePage').addEventListener('click', function() {
+    window.close(); // Close the current tab
+});
 
 // document.getElementById('saveLimit').addEventListener('click', function() {
 //     const tabLimit = document.getElementById('tabLimit').value;

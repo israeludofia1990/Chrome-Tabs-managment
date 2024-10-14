@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('openOptions').addEventListener('click', function() {
         chrome.tabs.create({ url: chrome.runtime.getURL('options/options.html') });
     });
+
+    // Close the popup when the close button is clicked
+    document.getElementById('closePopup').addEventListener('click', function() {
+        window.close();
+    });
 });
 
 
