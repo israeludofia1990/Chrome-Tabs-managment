@@ -1,0 +1,119 @@
+/* General styles for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 20px;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 26px;
+    color: #004085;
+    margin-bottom: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+label {
+    font-size: 16px;
+    color: #495057;
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+input[type="number"]:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px; /* Adds spacing between buttons */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:focus {
+    outline: none;
+    background-color: #004085;
+}
+
+/* Styling for the close button */
+.close-button {
+    background-color: #dc3545; /* Red background */
+}
+
+.close-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.close-button:active {
+    background-color: #bd2130; /* Even darker on active */
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+    display: none; /* Initially hidden */
+}
+
+/* For small screens */
+@media (max-width: 500px) {
+    .container {
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
